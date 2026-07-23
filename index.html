@@ -6,38 +6,36 @@
   <title>Московский Эксперт: Сквозь века</title>
   <style>
     :root{
-      --bg:#0b1220;
-      --card: rgba(255,255,255,.06);
-      --text:#eef2ff;
-      --muted: rgba(238,242,255,.72);
-      --line: rgba(255,255,255,.12);
-      --shadow: 0 18px 50px rgba(0,0,0,.35);
+      --bg:#f5f7fb;
+      --card:#ffffff;
+      --text:#111827;
+      --muted:#6b7280;
+      --line:rgba(17,24,39,.12);
+      --shadow: 0 16px 40px rgba(17,24,39,.12);
 
-      --accent:#ff3b5c;
-      --good:#22c55e;
+      --accent:#e11d48;
+      --good:#16a34a;
       --bad:#ef4444;
+      --soft:#f3f4f6;
     }
     *{ box-sizing:border-box; }
     body{
       margin:0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", sans-serif;
       background:
-        radial-gradient(900px 600px at 10% 5%, rgba(255,59,92,.25), transparent 60%),
-        radial-gradient(900px 600px at 90% 0%, rgba(99,102,241,.18), transparent 55%),
-        linear-gradient(180deg, #070a14, var(--bg));
+        radial-gradient(900px 600px at 10% 0%, rgba(225,29,72,.08), transparent 55%),
+        radial-gradient(900px 600px at 90% 0%, rgba(37,99,235,.08), transparent 55%),
+        var(--bg);
       color:var(--text);
     }
     header{
       position: sticky; top:0; z-index:10;
-      background: rgba(5,7,18,.55);
+      background: rgba(245,247,251,.8);
       backdrop-filter: blur(8px);
       border-bottom:1px solid var(--line);
     }
     .wrap{ max-width:1100px; margin:0 auto; padding: 14px 16px; }
-    .top{
-      display:flex; gap:12px; flex-wrap:wrap;
-      align-items:flex-start; justify-content:space-between;
-    }
+    .top{ display:flex; gap:12px; flex-wrap:wrap; align-items:flex-start; justify-content:space-between; }
     h1{ margin:0; font-size:18px; letter-spacing:.2px; }
     .sub{ margin-top:4px; color:var(--muted); font-size:13px; }
 
@@ -46,39 +44,47 @@
       padding:8px 10px;
       border:1px solid var(--line);
       border-radius: 999px;
-      background: rgba(255,255,255,.06);
-      color: rgba(238,242,255,.9);
+      background: rgba(255,255,255,.85);
     }
+
     .btn{
       appearance:none; border:none;
       padding:10px 12px;
       border-radius: 12px;
       border:1px solid var(--line);
-      background: rgba(255,255,255,.08);
+      background: #fff;
       color: var(--text);
       cursor:pointer;
-      font-weight: 800;
+      font-weight: 850;
       transition: transform .05s ease, background .15s ease;
     }
-    .btn:hover{ background: rgba(255,255,255,.12); }
+    .btn:hover{ background: var(--soft); }
     .btn:active{ transform: translateY(1px); }
     .btn.primary{
-      background: linear-gradient(180deg, rgba(255,59,92,.95), rgba(255,59,92,.65));
-      border-color: rgba(255,59,92,.35);
+      background: linear-gradient(180deg, #fb7185, #e11d48);
+      border-color: rgba(225,29,72,.25);
+      color:#fff;
     }
     .btn.good{
-      background: linear-gradient(180deg, rgba(34,197,94,.95), rgba(34,197,94,.60));
-      border-color: rgba(34,197,94,.35);
+      background: linear-gradient(180deg, rgba(22,163,74,.95), rgba(22,163,74,.72));
+      border-color: rgba(22,163,74,.25);
+      color:#fff;
     }
-    .btn:disabled{ opacity:.5; cursor:not-allowed; transform:none; }
+    .btn:disabled{ opacity:.55; cursor:not-allowed; transform:none; }
+
+    .iconBtn{
+      width:44px; height:40px;
+      display:inline-flex; align-items:center; justify-content:center;
+      border-radius: 12px;
+      border:1px solid var(--line);
+      background:#fff;
+      cursor:pointer;
+      font-size:18px;
+    }
+    .iconBtn:hover{ background: var(--soft); }
 
     main{ padding: 16px; }
-    .grid{
-      max-width:1100px; margin:0 auto;
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
+    .grid{ max-width:1100px; margin:0 auto; display:grid; grid-template-columns: 1fr; gap: 16px; }
 
     .card{
       border:1px solid var(--line);
@@ -95,57 +101,51 @@
     }
     .card .bd{ padding: 14px; }
 
-    .days{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
+    /* Tiles */
+    .days{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
     @media (max-width: 980px){ .days{ grid-template-columns: 1fr; } }
 
     .dayTile{
       border:1px solid var(--line);
       border-radius: 16px;
       overflow:hidden;
-      background: rgba(255,255,255,.05);
+      background: #fff;
       display:flex;
       flex-direction:column;
-      min-height: 220px;
+      min-height: 280px;
     }
     .dayImg{
-      height: 110px;
-      background: #111;
+      height: 160px; /* крупнее */
+      background: #ddd;
       background-size: cover;
       background-position: center;
       border-bottom:1px solid var(--line);
     }
     .dayInfo{ padding: 12px; display:grid; gap:8px; }
-    .dayTitle{ font-weight: 900; }
+    .dayTitle{ font-weight: 950; }
     .dayMeta{ color: var(--muted); font-size: 13px; line-height:1.25; }
     .dayRow{ margin-top:auto; padding: 12px; display:flex; gap:10px; justify-content:space-between; align-items:center; }
     .tag{
       display:inline-flex; padding:3px 8px; border-radius: 999px;
       border:1px solid var(--line);
-      background: rgba(0,0,0,.18);
-      color: rgba(238,242,255,.85);
+      background: rgba(17,24,39,.03);
+      color: rgba(17,24,39,.85);
       font-size: 12px;
     }
 
-    .twoCol{
-      display:grid;
-      grid-template-columns: .9fr 1.1fr;
-      gap: 14px;
-    }
+    /* Play */
+    .twoCol{ display:grid; grid-template-columns: .95fr 1.05fr; gap: 14px; }
     @media (max-width: 980px){ .twoCol{ grid-template-columns: 1fr; } }
 
     .scene{
       border:1px solid var(--line);
       border-radius: 16px;
       overflow:hidden;
-      background: rgba(255,255,255,.05);
+      background: #fff;
     }
     .sceneImg{
-      height: 180px;
-      background:#0d1224;
+      height: 260px; /* крупнее */
+      background:#e5e7eb;
       background-size: cover;
       background-position: center;
       border-bottom:1px solid var(--line);
@@ -155,28 +155,28 @@
     .qBox{
       border:1px solid var(--line);
       border-radius: 16px;
-      background: rgba(255,255,255,.05);
+      background: #fff;
       padding: 12px;
       display:grid;
       gap: 10px;
     }
     .qTitle{ font-weight: 950; font-size: 15px; }
     .qStyled{
-      border:1px dashed rgba(255,255,255,.16);
+      border:1px dashed rgba(17,24,39,.20);
       border-radius: 14px;
       padding: 10px 12px;
-      background: rgba(0,0,0,.18);
+      background: rgba(17,24,39,.03);
       line-height:1.35;
-      color: rgba(238,242,255,.92);
+      color: rgba(17,24,39,.92);
       font-size: 14px;
     }
     .hint{
       display:none;
-      border:1px solid rgba(255,255,255,.14);
+      border:1px solid rgba(17,24,39,.12);
       border-radius: 14px;
       padding: 10px 12px;
-      background: rgba(255,255,255,.06);
-      color: rgba(238,242,255,.88);
+      background: rgba(225,29,72,.06);
+      color: rgba(17,24,39,.88);
       line-height:1.3;
       font-size: 13px;
     }
@@ -188,40 +188,41 @@
       border:1px solid var(--line);
       border-radius: 14px;
       padding: 12px;
-      background: rgba(255,255,255,.06);
+      background: #fff;
       cursor:pointer;
       font-weight: 850;
     }
-    .ans:hover{ background: rgba(255,255,255,.10); }
-    .ans:disabled{ opacity:.55; cursor:not-allowed; }
+    .ans:hover{ background: var(--soft); }
+    .ans:disabled{ opacity:.60; cursor:not-allowed; }
 
     .toast{
       display:none;
       border-radius: 14px;
       padding: 10px 12px;
-      border:1px dashed rgba(255,255,255,.18);
-      background: rgba(0,0,0,.20);
-      color: rgba(238,242,255,.90);
+      border:1px dashed rgba(17,24,39,.18);
+      background: rgba(17,24,39,.03);
+      color: rgba(17,24,39,.90);
       font-size: 13px;
       line-height:1.3;
     }
     .toast.show{ display:block; }
-    .goodTxt{ color: rgba(34,197,94,.95); font-weight: 950; }
-    .badTxt{ color: rgba(239,68,68,.95); font-weight: 950; }
+    .goodTxt{ color: var(--good); font-weight: 950; }
+    .badTxt{ color: var(--bad); font-weight: 950; }
 
     .kpis{
-      display:flex;
-      gap: 10px;
-      flex-wrap:wrap;
+      display:flex; gap: 10px; flex-wrap:wrap;
       justify-content:flex-end;
       color: var(--muted);
       font-size: 13px;
     }
     .kpis b{ color: var(--text); }
 
+    .small{ font-size:12px; color: var(--muted); }
+
+    /* Modal */
     .modal{
       position: fixed; inset:0;
-      background: rgba(0,0,0,.55);
+      background: rgba(17,24,39,.45);
       display:none;
       align-items:center;
       justify-content:center;
@@ -233,7 +234,7 @@
       width: min(720px, 100%);
       border:1px solid var(--line);
       border-radius: 18px;
-      background: rgba(18,26,51,.96);
+      background: #fff;
       box-shadow: var(--shadow);
       overflow:hidden;
     }
@@ -246,19 +247,19 @@
     .x{ border:none; background:transparent; color:var(--text); font-size:22px; cursor:pointer; }
 
     .field{ display:grid; gap:6px; margin:10px 0; }
-    label{ color: rgba(238,242,255,.75); font-size: 13px; }
+    label{ color: var(--muted); font-size: 13px; }
     input{
       width:100%;
       padding: 10px 12px;
       border-radius: 12px;
       border:1px solid var(--line);
-      background: rgba(0,0,0,.20);
+      background: #fff;
       color: var(--text);
       outline:none;
     }
-    .small{ font-size:12px; color: rgba(238,242,255,.65); }
   </style>
 </head>
+
 <body>
 <header>
   <div class="wrap">
@@ -269,6 +270,7 @@
       </div>
       <div class="pill">
         <span id="playerPill">Игрок: —</span>
+        <button class="btn" id="btnCopyCode" style="display:none;">Код</button>
         <button class="btn" id="btnHome">Домой</button>
         <button class="btn" id="btnReset">Сброс</button>
       </div>
@@ -283,6 +285,7 @@
         <div>
           <div style="font-weight:950;">Эпохи</div>
           <div class="sub" id="welcomeLine"></div>
+          <div class="sub" id="codeLine" style="margin-top:6px;"></div>
         </div>
         <div class="kpis">
           <div>Баллы: <b id="kTotalScore">0</b></div>
@@ -318,8 +321,8 @@
             <div class="qTitle" id="qTitle"></div>
             <div class="qStyled" id="qStyled"></div>
 
-            <div style="display:flex; gap:10px; flex-wrap:wrap;">
-              <button class="btn" id="btnHint">Суть вопроса</button>
+            <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+              <button class="iconBtn" id="btnHint" aria-label="Суть вопроса">💡</button>
               <button class="btn" id="btnBackDay">К эпохам</button>
             </div>
 
@@ -328,8 +331,7 @@
             <div class="answers" id="answersBox"></div>
             <div class="toast" id="toast"></div>
 
-            <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; align-items:center;">
-              <div class="small" id="dayTimeLine"></div>
+            <div style="display:flex; justify-content:flex-end; gap:10px; flex-wrap:wrap; align-items:center;">
               <button class="btn primary" id="btnNext" disabled>Дальше</button>
             </div>
           </div>
@@ -339,12 +341,13 @@
   </div>
 </main>
 
+<!-- LOGIN MODAL -->
 <div class="modal" id="modal">
   <div class="sheet">
     <div class="hd">
       <div>
         <div style="font-weight:950;">Вход в игру</div>
-        <div class="sub">Введите Фамилию и Имя. Регистрация не нужна.</div>
+        <div class="sub">Чтобы продолжить в другом браузере/устройстве — укажите «Код игрока».</div>
       </div>
       <button class="x" id="mClose">×</button>
     </div>
@@ -357,6 +360,11 @@
         <label>Имя</label>
         <input id="inFirst" placeholder="Например: Ирина" />
       </div>
+      <div class="field">
+        <label>Код игрока (если уже был)</label>
+        <input id="inCode" placeholder="Например: A7K9Q2" />
+        <div class="small">Если код пустой — система создаст новый.</div>
+      </div>
       <button class="btn good" id="btnSaveName">Продолжить</button>
       <div class="small" id="firebaseNote" style="margin-top:10px;"></div>
     </div>
@@ -364,7 +372,7 @@
 </div>
 
 <script type="module">
-  // ✅ ВАШ firebaseConfig уже вставлен
+  // Firebase config (ваш)
   const FIREBASE_CONFIG = {
     apiKey: "AIzaSyAlho1hvHw0ncbvsrr4GAz0zCP_G0tHwhE",
     authDomain: "game-526e2.firebaseapp.com",
@@ -408,7 +416,7 @@
       },
 
       { id:"d2_q1", day:2, category:"Соц.защита (семьи с детьми)",
-        styled:"«Милостивый государь... по какому главному признаку им пособие от казны назначается?»",
+        styled:"«Милостивый государь… по какому главному признаку им пособие от казны назначается?»",
         hint:"Простыми словами: что проверяют, чтобы признать семью нуждающейся?",
         options:[ { t:"Среднедушевой доход семьи (и/или имущество)", ok:true }, { t:"Любая работа родителей не допускается", ok:false }, { t:"Только возраст родителей", ok:false }, { t:"Только количество детей (без дохода)", ok:false } ]
       },
@@ -456,7 +464,7 @@
     ]
   };
 
-  const LS_KEY = "cityday_moscow_expert_v2";
+  const LS_KEY = "cityday_moscow_expert_light_v1";
   const $ = (id)=>document.getElementById(id);
 
   function nowISO(){ return new Date().toISOString(); }
@@ -466,11 +474,16 @@
     if(m<=0) return `${s}с`;
     return `${m}м ${String(s).padStart(2,"0")}с`;
   }
+  function escapeHtml(s){
+    return (s ?? "").toString()
+      .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+  }
 
   function newState(){
     return {
-      version: 2,
-      player: { uid:"", firstName:"", lastName:"", displayName:"" },
+      version: 1,
+      player: { firstName:"", lastName:"", displayName:"", code:"" },
       progress: { lastCompletedDay: 0, totalScore: 0, days: {} }
     };
   }
@@ -480,6 +493,15 @@
     catch(e){ return null; }
   }
   function saveLocal(st){ localStorage.setItem(LS_KEY, JSON.stringify(st)); }
+
+  function recomputeTotals(state){
+    let total = 0;
+    for(const dKey of Object.keys(state.progress.days)){
+      total += Number(state.progress.days[dKey].score || 0);
+    }
+    state.progress.totalScore = total;
+    return state;
+  }
 
   function getDayQuestions(dayId){ return GAME.questions.filter(q=>q.day === dayId); }
 
@@ -491,21 +513,21 @@
     return state.progress.days[dKey];
   }
 
-  function recomputeTotals(state){
-    let total = 0;
-    for(const dKey of Object.keys(state.progress.days)){
-      total += Number(state.progress.days[dKey].score || 0);
-    }
-    state.progress.totalScore = total;
-    return state;
-  }
-
   function dayIsUnlocked(state, dayId){
     return dayId <= (state.progress.lastCompletedDay + 1);
   }
 
-  // Firebase
-  let fb = { enabled:false, auth:null, db:null, uid:"" };
+  function getWelcomeText(state){
+    const name = state.player.displayName || "коллега";
+    const lcd = state.progress.lastCompletedDay || 0;
+    if(lcd === 0) return `Добро пожаловать, ${name}! Начинаем с Боярской Москвы.`;
+    if(lcd === 1) return `С возвращением, ${name}! Боярская Москва позади, впереди блеск Империи!`;
+    if(lcd === 2) return `С возвращением, ${name}! Имперский блеск пройден. Впереди — Цифровая Москва!`;
+    return `С возвращением, ${name}!`;
+  }
+
+  // ---- Firebase
+  let fb = { auth:null, db:null, uid:"", enabled:false, doc:null, getDoc:null, setDoc:null, serverTimestamp:null };
 
   async function initFirebase(){
     const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js");
@@ -524,63 +546,73 @@
       });
     });
 
-    fb.doc = (uid)=>doc(fb.db, "players", uid);
+    fb.doc = (code)=>doc(fb.db, "citydayPlayers", code);
     fb.getDoc = getDoc;
     fb.setDoc = setDoc;
     fb.serverTimestamp = serverTimestamp;
   }
 
-  async function loadFromFirebase(uid){
+  async function loadFromFirebaseByCode(code){
     try{
-      const snap = await fb.getDoc(fb.doc(uid));
+      const snap = await fb.getDoc(fb.doc(code));
       return snap.exists() ? snap.data() : null;
     }catch(e){ console.warn(e); return null; }
   }
 
-  async function saveToFirebase(state){
+  async function saveToFirebaseByCode(state){
     if(!fb.enabled) return;
+    if(!state.player.code) return;
+
     try{
-      await fb.setDoc(fb.doc(state.player.uid), { ...state, updatedAt: fb.serverTimestamp() }, { merge:true });
-      setSaveStatus("Сохранено в базе.");
+      await fb.setDoc(
+        fb.doc(state.player.code),
+        { ...state, updatedAt: fb.serverTimestamp() },
+        { merge:true }
+      );
+      setSaveStatus("Сохранено.");
     }catch(e){
       console.warn(e);
-      setSaveStatus("Не удалось сохранить в базе (попробуйте позже).");
+      setSaveStatus("Не удалось сохранить (проверьте Rules).");
     }
   }
 
-  // UI
-  const ui = { mode:"home", dayId:1, qIndex:0, canProceed:false };
+  function genCode(){
+    const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    let out = "";
+    for(let i=0;i<6;i++) out += alphabet[Math.floor(Math.random()*alphabet.length)];
+    return out;
+  }
 
-  function setSaveStatus(txt){ $("saveStatus").textContent = txt || ""; }
+  async function createUniqueCode(){
+    for(let i=0;i<8;i++){
+      const c = genCode();
+      const existing = await loadFromFirebaseByCode(c);
+      if(!existing) return c;
+    }
+    return genCode();
+  }
+
+  // ---- UI state
+  const ui = { mode:"home", dayId:1, qIndex:0, canProceed:false };
+  let state = loadLocal() || newState();
+
   function setMetaLine(txt){ $("metaLine").textContent = txt || ""; }
+  function setSaveStatus(txt){ $("saveStatus").textContent = txt || ""; }
 
   function openModal(){ $("modal").classList.add("open"); }
   function closeModal(){ $("modal").classList.remove("open"); }
-
-  function escapeHtml(s){
-    return (s ?? "").toString()
-      .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;").replaceAll("'","&#039;");
-  }
-
-  function getWelcomeText(state){
-    const name = state.player.displayName || "коллега";
-    const lcd = state.progress.lastCompletedDay || 0;
-    if(lcd === 0) return `Добро пожаловать, ${name}! Начинаем с Боярской Москвы.`;
-    if(lcd === 1) return `С возвращением, ${name}! Боярская Москва позади, впереди блеск Империи!`;
-    if(lcd === 2) return `С возвращением, ${name}! Имперский блеск пройден. Впереди — Цифровая Москва!`;
-    return `С возвращением, ${name}!`;
-  }
 
   function persist(){
     recomputeTotals(state);
     saveLocal(state);
     setSaveStatus("Сохранение…");
-    saveToFirebase(state);
+    saveToFirebaseByCode(state);
   }
 
   function renderPlayer(){
     $("playerPill").textContent = state.player.displayName ? `Игрок: ${state.player.displayName}` : "Игрок: —";
+    const hasCode = !!state.player.code;
+    $("btnCopyCode").style.display = hasCode ? "inline-flex" : "none";
   }
 
   function renderHome(){
@@ -590,6 +622,10 @@
     $("kTotalScore").textContent = String(state.progress.totalScore || 0);
     $("kDoneDays").textContent = `${state.progress.lastCompletedDay || 0}/${GAME.totalDays}`;
     $("welcomeLine").textContent = getWelcomeText(state);
+
+    $("codeLine").textContent = state.player.code
+      ? `Ваш код игрока: ${state.player.code} (сохраните, чтобы продолжить в другом браузере)`
+      : "";
 
     const daysBox = $("daysBox");
     daysBox.innerHTML = "";
@@ -608,7 +644,7 @@
 
       const img = document.createElement("div");
       img.className = "dayImg";
-      img.style.backgroundImage = `linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,.70)), url('${day.image}')`;
+      img.style.backgroundImage = `linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.55)), url('${day.image}')`;
       tile.appendChild(img);
 
       const info = document.createElement("div");
@@ -644,7 +680,7 @@
       daysBox.appendChild(tile);
     }
 
-    setMetaLine("Firebase подключён: прогресс сохраняется в базе.");
+    setMetaLine("Сохранение: Firebase (по коду игрока).");
   }
 
   function startDay(dayId){
@@ -682,9 +718,14 @@
     $("playTitle").textContent = day.title;
     $("playSub").textContent = day.atmosphere;
 
-    $("sceneImg").style.backgroundImage = `linear-gradient(180deg, rgba(0,0,0,.10), rgba(0,0,0,.75)), url('${day.image}')`;
+    $("sceneImg").style.backgroundImage = `linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.55)), url('${day.image}')`;
     $("sceneText").textContent = `Атмосфера: ${day.atmosphere}`;
 
+    const toast = $("toast");
+    const hintBox = $("hintBox");
+    hintBox.classList.remove("show");
+
+    // финал дня
     if(ui.qIndex >= qs.length){
       if(!dState.finishedAtISO){
         dState.finishedAtISO = nowISO();
@@ -696,26 +737,22 @@
 
       $("qTitle").textContent = "Эпоха завершена";
       $("qStyled").innerHTML = `Вы завершили: <b>${escapeHtml(day.title)}</b>.`;
-      $("hintBox").classList.remove("show");
-      $("hintBox").textContent = "";
       $("answersBox").innerHTML = "";
 
       $("kQ").textContent = `${qs.length}/${qs.length}`;
       $("kTry").textContent = `—`;
       $("kDayScore").textContent = String(dState.score || 0);
 
-      $("dayTimeLine").textContent = `Время за день: ${formatSec(dState.timeSec || 0)} • Баллы: ${dState.score || 0}`;
       $("btnNext").disabled = true;
       ui.canProceed = false;
 
-      const toast = $("toast");
       toast.classList.add("show");
       toast.innerHTML = `<div><span class="goodTxt">Готово!</span> ${escapeHtml(day.welcomeNext || "")}</div>`;
       return;
     }
 
     const q = qs[ui.qIndex];
-    const qState = dState.questions[q.id] || { tries:0, done:false, correct:false, awarded:0 };
+    const qState = dState.questions[q.id] || { tries:0, done:false, correct:false, awarded:0, feedback:"" };
     dState.questions[q.id] = qState;
 
     $("kQ").textContent = `${ui.qIndex+1}/${qs.length}`;
@@ -724,14 +761,11 @@
 
     $("qTitle").textContent = q.category;
     $("qStyled").textContent = q.styled;
-    $("hintBox").textContent = q.hint || "";
-    $("hintBox").classList.remove("show");
-    $("dayTimeLine").textContent = dState.startedAtISO ? `Идёт время…` : "";
+    hintBox.textContent = q.hint || "";
 
+    // ответы
     const answersBox = $("answersBox");
     answersBox.innerHTML = "";
-    const toast = $("toast");
-    toast.classList.remove("show");
 
     q.options.forEach((opt, i)=>{
       const b = document.createElement("button");
@@ -742,24 +776,34 @@
       answersBox.appendChild(b);
     });
 
-    $("btnNext").disabled = true;
-    ui.canProceed = false;
+    // показать прошлый фидбек (если перерисовка)
+    if(qState.feedback){
+      toast.classList.add("show");
+      toast.innerHTML = qState.feedback;
+    } else {
+      toast.classList.remove("show");
+    }
+
+    // КНОПКА ДАЛЬШЕ: активна, если вопрос завершён
+    ui.canProceed = !!qState.done;
+    $("btnNext").disabled = !ui.canProceed;
+
+    // если done — отключаем ответы
+    if(qState.done){
+      [...document.querySelectorAll(".ans")].forEach(x=>x.disabled=true);
+    }
   }
 
   function answerQuestion(optIndex){
     const dState = ensureDay(state, ui.dayId);
     const qs = getDayQuestions(ui.dayId);
     const q = qs[ui.qIndex];
-
     const qState = dState.questions[q.id];
     if(qState.done) return;
 
     qState.tries += 1;
     const picked = q.options[optIndex];
     const correct = !!picked.ok;
-
-    const toast = $("toast");
-    toast.classList.add("show");
 
     if(correct){
       qState.correct = true;
@@ -772,18 +816,15 @@
       qState.awarded = award;
       dState.score = Number(dState.score||0) + award;
 
-      toast.innerHTML = `<div><span class="goodTxt">Верно.</span> +${award} баллов.</div>`;
-      ui.canProceed = true;
-      $("btnNext").disabled = false;
-      [...document.querySelectorAll(".ans")].forEach(x=>x.disabled=true);
-
+      qState.feedback = `<div><span class="goodTxt">Верно.</span> +${award} баллов.</div>`;
       persist();
-      render();
+      render(); // теперь renderPlay включит кнопку «Дальше»
       return;
     }
 
+    // неверно
     if(qState.tries < GAME.maxTries){
-      toast.innerHTML = `<div><span class="badTxt">Неверно.</span> Попробуйте ещё раз.</div>`;
+      qState.feedback = `<div><span class="badTxt">Неверно.</span> Попробуйте ещё раз.</div>`;
       persist();
       render();
       return;
@@ -791,10 +832,7 @@
       qState.done = true;
       qState.correct = false;
       qState.awarded = 0;
-      toast.innerHTML = `<div><span class="badTxt">Неверно.</span> Баллы за вопрос: 0.</div>`;
-      ui.canProceed = true;
-      $("btnNext").disabled = false;
-      [...document.querySelectorAll(".ans")].forEach(x=>x.disabled=true);
+      qState.feedback = `<div><span class="badTxt">Неверно.</span> Баллы за вопрос: 0.</div>`;
       persist();
       render();
       return;
@@ -807,61 +845,106 @@
     else renderPlay();
   }
 
-  // Events
+  async function copyText(text){
+    try{
+      await navigator.clipboard.writeText(text);
+      alert("Скопировано.");
+    }catch(e){
+      prompt("Скопируйте вручную:", text);
+    }
+  }
+
+  // ---- events
   $("mClose").addEventListener("click", closeModal);
+
   $("btnReset").addEventListener("click", ()=>{
     if(confirm("Сбросить прогресс на этом устройстве?")){
       localStorage.removeItem(LS_KEY);
       location.reload();
     }
   });
+
   $("btnHome").addEventListener("click", ()=>{ ui.mode="home"; render(); });
   $("btnBackDay").addEventListener("click", ()=>{ ui.mode="home"; render(); });
+
   $("btnHint").addEventListener("click", ()=>{ $("hintBox").classList.toggle("show"); });
+
   $("btnNext").addEventListener("click", ()=>{
-    if(!ui.canProceed) return;
-    ui.canProceed = false;
-    $("btnNext").disabled = true;
-    $("toast").classList.remove("show");
-    $("hintBox").classList.remove("show");
-    ui.qIndex += 1;
-    render();
+    if(!$("btnNext").disabled){
+      $("hintBox").classList.remove("show");
+      ui.qIndex += 1;
+      render();
+    }
   });
 
-  let state = loadLocal() || newState();
+  $("btnCopyCode").addEventListener("click", ()=>{
+    if(state.player.code) copyText(state.player.code);
+  });
+
+  // ---- init
   setMetaLine("Подключение Firebase…");
-
   await initFirebase();
-  $("firebaseNote").textContent = "Firebase подключён. Прогресс сохранится в базе и будет доступен при повторном входе с того же устройства.";
+  $("firebaseNote").textContent = "Firebase подключён. Прогресс хранится в базе по «коду игрока».";
 
-  state.player.uid = fb.uid;
-  const remote = await loadFromFirebase(fb.uid);
-  if(remote && remote.player){
-    state = { ...state, ...remote };
-    state.player.uid = fb.uid;
+  // если локально уже есть код — подтягиваем
+  if(state.player.code){
+    const remote = await loadFromFirebaseByCode(state.player.code);
+    if(remote && remote.progress){
+      state = { ...state, ...remote };
+      recomputeTotals(state);
+      saveLocal(state);
+    }
   }
 
-  state = recomputeTotals(state);
-  saveLocal(state);
-
-  $("btnSaveName").addEventListener("click", ()=>{
+  $("btnSaveName").addEventListener("click", async ()=>{
     const last = $("inLast").value.trim();
     const first = $("inFirst").value.trim();
+    let code = $("inCode").value.trim().toUpperCase().replaceAll(" ", "");
+
     if(!last || !first){ alert("Введите Фамилию и Имя."); return; }
 
+    // если код введён — пробуем загрузить
+    if(code){
+      const remote = await loadFromFirebaseByCode(code);
+      if(remote && remote.progress){
+        state = { ...remote };
+        state.player.lastName = last;
+        state.player.firstName = first;
+        state.player.displayName = `${last} ${first}`;
+        state.player.code = code;
+        persist();
+        closeModal();
+        ui.mode="home";
+        render();
+        alert(getWelcomeText(state));
+        return;
+      } else {
+        alert("Код не найден. Проверьте ввод или оставьте поле пустым, чтобы создать новый.");
+        return;
+      }
+    }
+
+    // иначе создаём новый код
+    code = await createUniqueCode();
     state.player.lastName = last;
     state.player.firstName = first;
     state.player.displayName = `${last} ${first}`;
+    state.player.code = code;
+
+    // сохраняем пустой прогресс сразу, чтобы код существовал
     persist();
     closeModal();
-
-    ui.mode = "home";
+    ui.mode="home";
     render();
-    setTimeout(()=>alert(getWelcomeText(state)), 50);
+
+    alert(`Готово! Ваш код игрока: ${code}\nСохраните его — он нужен для продолжения в другом браузере.`);
+    alert(getWelcomeText(state));
   });
 
+  // если нет имени — покажем вход
   if(!state.player.displayName) openModal();
-  ui.mode = "home";
+
+  ui.mode="home";
   render();
 </script>
 </body>
