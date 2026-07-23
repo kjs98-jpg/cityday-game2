@@ -1,0 +1,868 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Московский Эксперт: Сквозь века</title>
+  <style>
+    :root{
+      --bg:#0b1220;
+      --card: rgba(255,255,255,.06);
+      --text:#eef2ff;
+      --muted: rgba(238,242,255,.72);
+      --line: rgba(255,255,255,.12);
+      --shadow: 0 18px 50px rgba(0,0,0,.35);
+
+      --accent:#ff3b5c;
+      --good:#22c55e;
+      --bad:#ef4444;
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", sans-serif;
+      background:
+        radial-gradient(900px 600px at 10% 5%, rgba(255,59,92,.25), transparent 60%),
+        radial-gradient(900px 600px at 90% 0%, rgba(99,102,241,.18), transparent 55%),
+        linear-gradient(180deg, #070a14, var(--bg));
+      color:var(--text);
+    }
+    header{
+      position: sticky; top:0; z-index:10;
+      background: rgba(5,7,18,.55);
+      backdrop-filter: blur(8px);
+      border-bottom:1px solid var(--line);
+    }
+    .wrap{ max-width:1100px; margin:0 auto; padding: 14px 16px; }
+    .top{
+      display:flex; gap:12px; flex-wrap:wrap;
+      align-items:flex-start; justify-content:space-between;
+    }
+    h1{ margin:0; font-size:18px; letter-spacing:.2px; }
+    .sub{ margin-top:4px; color:var(--muted); font-size:13px; }
+
+    .pill{
+      display:inline-flex; gap:10px; align-items:center;
+      padding:8px 10px;
+      border:1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      color: rgba(238,242,255,.9);
+    }
+    .btn{
+      appearance:none; border:none;
+      padding:10px 12px;
+      border-radius: 12px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.08);
+      color: var(--text);
+      cursor:pointer;
+      font-weight: 800;
+      transition: transform .05s ease, background .15s ease;
+    }
+    .btn:hover{ background: rgba(255,255,255,.12); }
+    .btn:active{ transform: translateY(1px); }
+    .btn.primary{
+      background: linear-gradient(180deg, rgba(255,59,92,.95), rgba(255,59,92,.65));
+      border-color: rgba(255,59,92,.35);
+    }
+    .btn.good{
+      background: linear-gradient(180deg, rgba(34,197,94,.95), rgba(34,197,94,.60));
+      border-color: rgba(34,197,94,.35);
+    }
+    .btn:disabled{ opacity:.5; cursor:not-allowed; transform:none; }
+
+    main{ padding: 16px; }
+    .grid{
+      max-width:1100px; margin:0 auto;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .card{
+      border:1px solid var(--line);
+      border-radius: 18px;
+      overflow:hidden;
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+    .card .hd{
+      padding: 14px;
+      border-bottom:1px solid var(--line);
+      display:flex; justify-content:space-between; gap:12px;
+      align-items:flex-start;
+    }
+    .card .bd{ padding: 14px; }
+
+    .days{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 980px){ .days{ grid-template-columns: 1fr; } }
+
+    .dayTile{
+      border:1px solid var(--line);
+      border-radius: 16px;
+      overflow:hidden;
+      background: rgba(255,255,255,.05);
+      display:flex;
+      flex-direction:column;
+      min-height: 220px;
+    }
+    .dayImg{
+      height: 110px;
+      background: #111;
+      background-size: cover;
+      background-position: center;
+      border-bottom:1px solid var(--line);
+    }
+    .dayInfo{ padding: 12px; display:grid; gap:8px; }
+    .dayTitle{ font-weight: 900; }
+    .dayMeta{ color: var(--muted); font-size: 13px; line-height:1.25; }
+    .dayRow{ margin-top:auto; padding: 12px; display:flex; gap:10px; justify-content:space-between; align-items:center; }
+    .tag{
+      display:inline-flex; padding:3px 8px; border-radius: 999px;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.18);
+      color: rgba(238,242,255,.85);
+      font-size: 12px;
+    }
+
+    .twoCol{
+      display:grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 14px;
+    }
+    @media (max-width: 980px){ .twoCol{ grid-template-columns: 1fr; } }
+
+    .scene{
+      border:1px solid var(--line);
+      border-radius: 16px;
+      overflow:hidden;
+      background: rgba(255,255,255,.05);
+    }
+    .sceneImg{
+      height: 180px;
+      background:#0d1224;
+      background-size: cover;
+      background-position: center;
+      border-bottom:1px solid var(--line);
+    }
+    .sceneText{ padding: 12px; color: var(--muted); font-size: 13px; line-height:1.3; }
+
+    .qBox{
+      border:1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,.05);
+      padding: 12px;
+      display:grid;
+      gap: 10px;
+    }
+    .qTitle{ font-weight: 950; font-size: 15px; }
+    .qStyled{
+      border:1px dashed rgba(255,255,255,.16);
+      border-radius: 14px;
+      padding: 10px 12px;
+      background: rgba(0,0,0,.18);
+      line-height:1.35;
+      color: rgba(238,242,255,.92);
+      font-size: 14px;
+    }
+    .hint{
+      display:none;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius: 14px;
+      padding: 10px 12px;
+      background: rgba(255,255,255,.06);
+      color: rgba(238,242,255,.88);
+      line-height:1.3;
+      font-size: 13px;
+    }
+    .hint.show{ display:block; }
+
+    .answers{ display:grid; gap:10px; }
+    .ans{
+      text-align:left;
+      border:1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px;
+      background: rgba(255,255,255,.06);
+      cursor:pointer;
+      font-weight: 850;
+    }
+    .ans:hover{ background: rgba(255,255,255,.10); }
+    .ans:disabled{ opacity:.55; cursor:not-allowed; }
+
+    .toast{
+      display:none;
+      border-radius: 14px;
+      padding: 10px 12px;
+      border:1px dashed rgba(255,255,255,.18);
+      background: rgba(0,0,0,.20);
+      color: rgba(238,242,255,.90);
+      font-size: 13px;
+      line-height:1.3;
+    }
+    .toast.show{ display:block; }
+    .goodTxt{ color: rgba(34,197,94,.95); font-weight: 950; }
+    .badTxt{ color: rgba(239,68,68,.95); font-weight: 950; }
+
+    .kpis{
+      display:flex;
+      gap: 10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .kpis b{ color: var(--text); }
+
+    .modal{
+      position: fixed; inset:0;
+      background: rgba(0,0,0,.55);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 16px;
+      z-index: 50;
+    }
+    .modal.open{ display:flex; }
+    .sheet{
+      width: min(720px, 100%);
+      border:1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(18,26,51,.96);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .sheet .hd{
+      padding: 14px;
+      border-bottom:1px solid var(--line);
+      display:flex; justify-content:space-between; gap:12px; align-items:flex-start;
+    }
+    .sheet .bd{ padding: 14px; }
+    .x{ border:none; background:transparent; color:var(--text); font-size:22px; cursor:pointer; }
+
+    .field{ display:grid; gap:6px; margin:10px 0; }
+    label{ color: rgba(238,242,255,.75); font-size: 13px; }
+    input{
+      width:100%;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.20);
+      color: var(--text);
+      outline:none;
+    }
+    .small{ font-size:12px; color: rgba(238,242,255,.65); }
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="top">
+      <div>
+        <h1>«Московский Эксперт: Сквозь века»</h1>
+        <div class="sub" id="metaLine">Загрузка…</div>
+      </div>
+      <div class="pill">
+        <span id="playerPill">Игрок: —</span>
+        <button class="btn" id="btnHome">Домой</button>
+        <button class="btn" id="btnReset">Сброс</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="grid">
+    <section class="card" id="homeCard" style="display:none;">
+      <div class="hd">
+        <div>
+          <div style="font-weight:950;">Эпохи</div>
+          <div class="sub" id="welcomeLine"></div>
+        </div>
+        <div class="kpis">
+          <div>Баллы: <b id="kTotalScore">0</b></div>
+          <div>Пройдено дней: <b id="kDoneDays">0/3</b></div>
+        </div>
+      </div>
+      <div class="bd">
+        <div class="days" id="daysBox"></div>
+        <div class="small" style="margin-top:10px;" id="saveStatus"></div>
+      </div>
+    </section>
+
+    <section class="card" id="playCard" style="display:none;">
+      <div class="hd">
+        <div>
+          <div style="font-weight:950;" id="playTitle">День</div>
+          <div class="sub" id="playSub"></div>
+        </div>
+        <div class="kpis">
+          <div>Вопрос: <b id="kQ">1/1</b></div>
+          <div>Попытка: <b id="kTry">1/2</b></div>
+          <div>Баллы за день: <b id="kDayScore">0</b></div>
+        </div>
+      </div>
+      <div class="bd">
+        <div class="twoCol">
+          <div class="scene">
+            <div class="sceneImg" id="sceneImg"></div>
+            <div class="sceneText" id="sceneText"></div>
+          </div>
+
+          <div class="qBox">
+            <div class="qTitle" id="qTitle"></div>
+            <div class="qStyled" id="qStyled"></div>
+
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <button class="btn" id="btnHint">Суть вопроса</button>
+              <button class="btn" id="btnBackDay">К эпохам</button>
+            </div>
+
+            <div class="hint" id="hintBox"></div>
+
+            <div class="answers" id="answersBox"></div>
+            <div class="toast" id="toast"></div>
+
+            <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; align-items:center;">
+              <div class="small" id="dayTimeLine"></div>
+              <button class="btn primary" id="btnNext" disabled>Дальше</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<div class="modal" id="modal">
+  <div class="sheet">
+    <div class="hd">
+      <div>
+        <div style="font-weight:950;">Вход в игру</div>
+        <div class="sub">Введите Фамилию и Имя. Регистрация не нужна.</div>
+      </div>
+      <button class="x" id="mClose">×</button>
+    </div>
+    <div class="bd">
+      <div class="field">
+        <label>Фамилия</label>
+        <input id="inLast" placeholder="Например: Иванова" />
+      </div>
+      <div class="field">
+        <label>Имя</label>
+        <input id="inFirst" placeholder="Например: Ирина" />
+      </div>
+      <button class="btn good" id="btnSaveName">Продолжить</button>
+      <div class="small" id="firebaseNote" style="margin-top:10px;"></div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  // ✅ ВАШ firebaseConfig уже вставлен
+  const FIREBASE_CONFIG = {
+    apiKey: "AIzaSyAlho1hvHw0ncbvsrr4GAz0zCP_G0tHwhE",
+    authDomain: "game-526e2.firebaseapp.com",
+    projectId: "game-526e2",
+    storageBucket: "game-526e2.firebasestorage.app",
+    messagingSenderId: "821333077473",
+    appId: "1:821333077473:web:fc2e4182d439a0f99df6a0",
+    measurementId: "G-ZPQRVSKMNF"
+  };
+
+  const GAME = {
+    totalDays: 3,
+    maxTries: 2,
+    pointsTry1: 10,
+    pointsTry2: 5,
+    days: [
+      { id: 1, title: "День 1: Боярская Москва (XII–XVII вв.)", atmosphere: "Деревянные палаты, звон колоколов, купцы.", image: "assets/day1.jpg", welcomeNext: "Боярская Москва позади, впереди блеск Империи!" },
+      { id: 2, title: "День 2: Имперская Москва (XVIII–XIX вв.)", atmosphere: "Балы, кареты, высокие воротнички, французская речь.", image: "assets/day2.jpg", welcomeNext: "Имперский блеск пройден. Впереди — Цифровая Москва!" },
+      { id: 3, title: "День 3: Цифровая Москва (XXI век)", atmosphere: "Небоскребы, электробусы, скорость, технологии.", image: "assets/day3.jpg", welcomeNext: "Финал близко. Главное — миссия КЦ!" }
+    ],
+    questions: [
+      { id:"d1_q1", day:1, category:"Скрипт (приветствие)",
+        styled:"«Отрок при входе в палаты государевы должен привечать гостей по уставу. Вот и ты, как трубку телефонную поднял, первым делом должен рекли...»",
+        hint:"Простыми словами: что вы обязаны сказать сразу после приветствия и представления?",
+        options:[ { t:"Чем я могу вам помочь?", ok:true }, { t:"Назовите ваш СНИЛС.", ok:false }, { t:"Подождите, я уточню информацию.", ok:false }, { t:"Слушаю вас.", ok:false } ]
+      },
+      { id:"d1_q2", day:1, category:"Соц.защита (верификация)",
+        styled:"«Чтобы грамоту в архивах сыскать да о человеке разузнать, надобно номер тайный спросить, что в книжице зеленой прописан. Како зовется та книжица?»",
+        hint:"Простыми словами: какой документ чаще всего используем для идентификации в системе?",
+        options:[ { t:"СНИЛС", ok:true }, { t:"ИНН", ok:false }, { t:"Полис ОМС", ok:false }, { t:"Водительское удостоверение", ok:false } ]
+      },
+      { id:"d1_q3", day:1, category:"Москва (история)",
+        styled:"«В летописи стародавней князь Юрий Долгорукий звал брата своего в град малый. В каком году это было, когда Москва впервые в грамотах упомянута?»",
+        hint:"Простыми словами: год первого упоминания Москвы в летописях.",
+        options:[ { t:"1147", ok:true }, { t:"1212", ok:false }, { t:"988", ok:false }, { t:"1812", ok:false } ]
+      },
+      { id:"d1_q4", day:1, category:"Сервис (уточнение)",
+        styled:"«Коли заморский купец речь ведет невнятную, а ты сути дела не разумеешь, как по уставу нашему переспросить надобно, чтоб не разгневать его?»",
+        hint:"Простыми словами: как вежливо уточнить, если запрос не понятен?",
+        options:[ { t:"Уточните, пожалуйста…", ok:true }, { t:"Повторите нормально.", ok:false }, { t:"Я вас не понимаю.", ok:false }, { t:"Говорите быстрее.", ok:false } ]
+      },
+
+      { id:"d2_q1", day:2, category:"Соц.защита (семьи с детьми)",
+        styled:"«Милостивый государь... по какому главному признаку им пособие от казны назначается?»",
+        hint:"Простыми словами: что проверяют, чтобы признать семью нуждающейся?",
+        options:[ { t:"Среднедушевой доход семьи (и/или имущество)", ok:true }, { t:"Любая работа родителей не допускается", ok:false }, { t:"Только возраст родителей", ok:false }, { t:"Только количество детей (без дохода)", ok:false } ]
+      },
+      { id:"d2_q2", day:2, category:"Соц.защита (семьи с детьми)",
+        styled:"«До какого возраста недорослям московским поддержка от города положена…?»",
+        hint:"Простыми словами: стандартный верхний возраст для выплат на ребёнка.",
+        options:[ { t:"До 18 лет", ok:true }, { t:"До 7 лет", ok:false }, { t:"До 14 лет", ok:false }, { t:"До 21 года", ok:false } ]
+      },
+      { id:"d2_q3", day:2, category:"КЦ (hold/ожидание)",
+        styled:"«Как любезно попросить господина на линии подождать…?»",
+        hint:"Простыми словами: какая вежливая фраза для удержания на линии?",
+        options:[ { t:"Оставайтесь, пожалуйста, на линии — я уточню информацию.", ok:true }, { t:"Ждите молча.", ok:false }, { t:"Я занят(а), перезвоните.", ok:false }, { t:"Не отвлекайте, я проверяю.", ok:false } ]
+      },
+      { id:"d2_q4", day:2, category:"Москва (архитектура)",
+        styled:"«…в честь победы над Наполеоном воздвигнутый. Как звать его?»",
+        hint:"Простыми словами: как называется главный храм, построенный в память о 1812 годе?",
+        options:[ { t:"Храм Христа Спасителя", ok:true }, { t:"Собор Василия Блаженного", ok:false }, { t:"Казанский собор", ok:false }, { t:"Новодевичий монастырь", ok:false } ]
+      },
+
+      { id:"d3_q1", day:3, category:"Соц.защита (старшее поколение)",
+        styled:"«…как называется этот проект мегаполиса?»",
+        hint:"Простыми словами: как называется городской проект для активных пенсионеров?",
+        options:[ { t:"Московское долголетие", ok:true }, { t:"Активный гражданин", ok:false }, { t:"Моя улица", ok:false }, { t:"Умный город", ok:false } ]
+      },
+      { id:"d3_q2", day:3, category:"Соц.защита (СКЛ)",
+        styled:"«…Как номер этой справки по форме?»",
+        hint:"Простыми словами: номер мед. справки на санаторно‑курортное лечение.",
+        options:[ { t:"070/у", ok:true }, { t:"086/у", ok:false }, { t:"002‑О/у", ok:false }, { t:"025/у", ok:false } ]
+      },
+      { id:"d3_q3", day:3, category:"Соц.защита (СКЛ)",
+        styled:"«…положен ли ему проезд бесплатный…?»",
+        hint:"Простыми словами: есть ли право на бесплатный проезд к месту лечения (если льгота это предусматривает)?",
+        options:[ { t:"Да, обычно предусмотрен проезд к месту лечения и обратно (при наличии права).", ok:true }, { t:"Нет, проезд всегда только за свой счёт.", ok:false }, { t:"Только в пределах Москвы.", ok:false }, { t:"Только на самолёт.", ok:false } ]
+      },
+      { id:"d3_q4", day:3, category:"Москва (современность)",
+        styled:"«…там можно буквально парить над рекой… О чем речь?»",
+        hint:"Простыми словами: как называется известный мост в парке Зарядье?",
+        options:[ { t:"Парящий мост в Зарядье", ok:true }, { t:"Крымский мост", ok:false }, { t:"Большой Каменный мост", ok:false }, { t:"Живописный мост", ok:false } ]
+      },
+      { id:"d3_final", day:3, category:"Финал (миссия КЦ)",
+        styled:"«…что остается главной ценностью нашего Контакт-центра в любой век?»",
+        hint:"Простыми словами: что главное в нашей работе (ценность/миссия)?",
+        options:[ { t:"Помощь людям и решение вопроса качественно (по возможности — с первого раза).", ok:true }, { t:"Минимальная длительность звонка любой ценой.", ok:false }, { t:"Отвечать строго шаблонами, без уточнений.", ok:false }, { t:"Переводить максимум звонков на других.", ok:false } ]
+      }
+    ]
+  };
+
+  const LS_KEY = "cityday_moscow_expert_v2";
+  const $ = (id)=>document.getElementById(id);
+
+  function nowISO(){ return new Date().toISOString(); }
+  function formatSec(sec){
+    sec = Number(sec||0);
+    const m = Math.floor(sec/60), s = sec%60;
+    if(m<=0) return `${s}с`;
+    return `${m}м ${String(s).padStart(2,"0")}с`;
+  }
+
+  function newState(){
+    return {
+      version: 2,
+      player: { uid:"", firstName:"", lastName:"", displayName:"" },
+      progress: { lastCompletedDay: 0, totalScore: 0, days: {} }
+    };
+  }
+
+  function loadLocal(){
+    try{ const raw = localStorage.getItem(LS_KEY); return raw ? JSON.parse(raw) : null; }
+    catch(e){ return null; }
+  }
+  function saveLocal(st){ localStorage.setItem(LS_KEY, JSON.stringify(st)); }
+
+  function getDayQuestions(dayId){ return GAME.questions.filter(q=>q.day === dayId); }
+
+  function ensureDay(state, dayId){
+    const dKey = String(dayId);
+    if(!state.progress.days[dKey]){
+      state.progress.days[dKey] = { startedAtISO:"", finishedAtISO:"", timeSec:0, score:0, questions:{} };
+    }
+    return state.progress.days[dKey];
+  }
+
+  function recomputeTotals(state){
+    let total = 0;
+    for(const dKey of Object.keys(state.progress.days)){
+      total += Number(state.progress.days[dKey].score || 0);
+    }
+    state.progress.totalScore = total;
+    return state;
+  }
+
+  function dayIsUnlocked(state, dayId){
+    return dayId <= (state.progress.lastCompletedDay + 1);
+  }
+
+  // Firebase
+  let fb = { enabled:false, auth:null, db:null, uid:"" };
+
+  async function initFirebase(){
+    const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js");
+    const { getAuth, signInAnonymously, onAuthStateChanged } = await import("https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js");
+    const { getFirestore, doc, getDoc, setDoc, serverTimestamp } = await import("https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js");
+
+    const app = initializeApp(FIREBASE_CONFIG);
+    fb.auth = getAuth(app);
+    fb.db = getFirestore(app);
+    fb.enabled = true;
+
+    await signInAnonymously(fb.auth);
+    await new Promise((resolve)=>{
+      onAuthStateChanged(fb.auth, (user)=>{
+        if(user){ fb.uid = user.uid; resolve(); }
+      });
+    });
+
+    fb.doc = (uid)=>doc(fb.db, "players", uid);
+    fb.getDoc = getDoc;
+    fb.setDoc = setDoc;
+    fb.serverTimestamp = serverTimestamp;
+  }
+
+  async function loadFromFirebase(uid){
+    try{
+      const snap = await fb.getDoc(fb.doc(uid));
+      return snap.exists() ? snap.data() : null;
+    }catch(e){ console.warn(e); return null; }
+  }
+
+  async function saveToFirebase(state){
+    if(!fb.enabled) return;
+    try{
+      await fb.setDoc(fb.doc(state.player.uid), { ...state, updatedAt: fb.serverTimestamp() }, { merge:true });
+      setSaveStatus("Сохранено в базе.");
+    }catch(e){
+      console.warn(e);
+      setSaveStatus("Не удалось сохранить в базе (попробуйте позже).");
+    }
+  }
+
+  // UI
+  const ui = { mode:"home", dayId:1, qIndex:0, canProceed:false };
+
+  function setSaveStatus(txt){ $("saveStatus").textContent = txt || ""; }
+  function setMetaLine(txt){ $("metaLine").textContent = txt || ""; }
+
+  function openModal(){ $("modal").classList.add("open"); }
+  function closeModal(){ $("modal").classList.remove("open"); }
+
+  function escapeHtml(s){
+    return (s ?? "").toString()
+      .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+  }
+
+  function getWelcomeText(state){
+    const name = state.player.displayName || "коллега";
+    const lcd = state.progress.lastCompletedDay || 0;
+    if(lcd === 0) return `Добро пожаловать, ${name}! Начинаем с Боярской Москвы.`;
+    if(lcd === 1) return `С возвращением, ${name}! Боярская Москва позади, впереди блеск Империи!`;
+    if(lcd === 2) return `С возвращением, ${name}! Имперский блеск пройден. Впереди — Цифровая Москва!`;
+    return `С возвращением, ${name}!`;
+  }
+
+  function persist(){
+    recomputeTotals(state);
+    saveLocal(state);
+    setSaveStatus("Сохранение…");
+    saveToFirebase(state);
+  }
+
+  function renderPlayer(){
+    $("playerPill").textContent = state.player.displayName ? `Игрок: ${state.player.displayName}` : "Игрок: —";
+  }
+
+  function renderHome(){
+    $("homeCard").style.display = "";
+    $("playCard").style.display = "none";
+
+    $("kTotalScore").textContent = String(state.progress.totalScore || 0);
+    $("kDoneDays").textContent = `${state.progress.lastCompletedDay || 0}/${GAME.totalDays}`;
+    $("welcomeLine").textContent = getWelcomeText(state);
+
+    const daysBox = $("daysBox");
+    daysBox.innerHTML = "";
+
+    for(const day of GAME.days){
+      const dState = ensureDay(state, day.id);
+      const qs = getDayQuestions(day.id);
+      const done = !!dState.finishedAtISO;
+      const unlocked = dayIsUnlocked(state, day.id);
+
+      const answered = Object.values(dState.questions || {}).filter(x=>x.done).length;
+      const totalQ = qs.length;
+
+      const tile = document.createElement("div");
+      tile.className = "dayTile";
+
+      const img = document.createElement("div");
+      img.className = "dayImg";
+      img.style.backgroundImage = `linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,.70)), url('${day.image}')`;
+      tile.appendChild(img);
+
+      const info = document.createElement("div");
+      info.className = "dayInfo";
+      info.innerHTML = `
+        <div class="dayTitle">${escapeHtml(day.title)}</div>
+        <div class="dayMeta">${escapeHtml(day.atmosphere)}</div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <span class="tag">${done ? "Пройден" : (unlocked ? "Доступен" : "Закрыт")}</span>
+          <span class="tag">Вопросов: ${answered}/${totalQ}</span>
+          <span class="tag">Баллы: ${dState.score || 0}</span>
+          ${dState.finishedAtISO ? `<span class="tag">Время: ${formatSec(dState.timeSec || 0)}</span>` : ``}
+        </div>
+      `;
+      tile.appendChild(info);
+
+      const row = document.createElement("div");
+      row.className = "dayRow";
+
+      const btn = document.createElement("button");
+      btn.className = "btn primary";
+      btn.textContent = done ? "Повторить день" : (answered>0 ? "Продолжить" : "Начать");
+      btn.disabled = !unlocked;
+      btn.addEventListener("click", ()=>startDay(day.id));
+      row.appendChild(btn);
+
+      const right = document.createElement("span");
+      right.className = "tag";
+      right.textContent = unlocked ? "→" : "🔒";
+      row.appendChild(right);
+
+      tile.appendChild(row);
+      daysBox.appendChild(tile);
+    }
+
+    setMetaLine("Firebase подключён: прогресс сохраняется в базе.");
+  }
+
+  function startDay(dayId){
+    if(!state.player.displayName){ openModal(); return; }
+    if(!dayIsUnlocked(state, dayId)){ alert("Этот день пока закрыт. Сначала завершите предыдущую эпоху."); return; }
+
+    ui.mode = "play";
+    ui.dayId = dayId;
+
+    const dState = ensureDay(state, dayId);
+    const qs = getDayQuestions(dayId);
+
+    if(!dState.startedAtISO) dState.startedAtISO = nowISO();
+
+    let idx = 0;
+    for(let i=0;i<qs.length;i++){
+      const q = qs[i];
+      const qState = dState.questions[q.id];
+      if(!qState || !qState.done){ idx = i; break; }
+      idx = i+1;
+    }
+    ui.qIndex = Math.min(idx, qs.length);
+    persist();
+    render();
+  }
+
+  function renderPlay(){
+    $("homeCard").style.display = "none";
+    $("playCard").style.display = "";
+
+    const day = GAME.days.find(d=>d.id===ui.dayId);
+    const dState = ensureDay(state, ui.dayId);
+    const qs = getDayQuestions(ui.dayId);
+
+    $("playTitle").textContent = day.title;
+    $("playSub").textContent = day.atmosphere;
+
+    $("sceneImg").style.backgroundImage = `linear-gradient(180deg, rgba(0,0,0,.10), rgba(0,0,0,.75)), url('${day.image}')`;
+    $("sceneText").textContent = `Атмосфера: ${day.atmosphere}`;
+
+    if(ui.qIndex >= qs.length){
+      if(!dState.finishedAtISO){
+        dState.finishedAtISO = nowISO();
+        const startMs = Date.parse(dState.startedAtISO);
+        dState.timeSec = Math.max(1, Math.round((Date.now() - startMs)/1000));
+        state.progress.lastCompletedDay = Math.max(state.progress.lastCompletedDay || 0, ui.dayId);
+        persist();
+      }
+
+      $("qTitle").textContent = "Эпоха завершена";
+      $("qStyled").innerHTML = `Вы завершили: <b>${escapeHtml(day.title)}</b>.`;
+      $("hintBox").classList.remove("show");
+      $("hintBox").textContent = "";
+      $("answersBox").innerHTML = "";
+
+      $("kQ").textContent = `${qs.length}/${qs.length}`;
+      $("kTry").textContent = `—`;
+      $("kDayScore").textContent = String(dState.score || 0);
+
+      $("dayTimeLine").textContent = `Время за день: ${formatSec(dState.timeSec || 0)} • Баллы: ${dState.score || 0}`;
+      $("btnNext").disabled = true;
+      ui.canProceed = false;
+
+      const toast = $("toast");
+      toast.classList.add("show");
+      toast.innerHTML = `<div><span class="goodTxt">Готово!</span> ${escapeHtml(day.welcomeNext || "")}</div>`;
+      return;
+    }
+
+    const q = qs[ui.qIndex];
+    const qState = dState.questions[q.id] || { tries:0, done:false, correct:false, awarded:0 };
+    dState.questions[q.id] = qState;
+
+    $("kQ").textContent = `${ui.qIndex+1}/${qs.length}`;
+    $("kTry").textContent = `${Math.min(qState.tries+1, GAME.maxTries)}/${GAME.maxTries}`;
+    $("kDayScore").textContent = String(dState.score || 0);
+
+    $("qTitle").textContent = q.category;
+    $("qStyled").textContent = q.styled;
+    $("hintBox").textContent = q.hint || "";
+    $("hintBox").classList.remove("show");
+    $("dayTimeLine").textContent = dState.startedAtISO ? `Идёт время…` : "";
+
+    const answersBox = $("answersBox");
+    answersBox.innerHTML = "";
+    const toast = $("toast");
+    toast.classList.remove("show");
+
+    q.options.forEach((opt, i)=>{
+      const b = document.createElement("button");
+      b.className = "ans";
+      b.textContent = opt.t;
+      b.disabled = qState.done;
+      b.addEventListener("click", ()=>answerQuestion(i));
+      answersBox.appendChild(b);
+    });
+
+    $("btnNext").disabled = true;
+    ui.canProceed = false;
+  }
+
+  function answerQuestion(optIndex){
+    const dState = ensureDay(state, ui.dayId);
+    const qs = getDayQuestions(ui.dayId);
+    const q = qs[ui.qIndex];
+
+    const qState = dState.questions[q.id];
+    if(qState.done) return;
+
+    qState.tries += 1;
+    const picked = q.options[optIndex];
+    const correct = !!picked.ok;
+
+    const toast = $("toast");
+    toast.classList.add("show");
+
+    if(correct){
+      qState.correct = true;
+      qState.done = true;
+
+      let award = 0;
+      if(qState.tries === 1) award = GAME.pointsTry1;
+      else if(qState.tries === 2) award = GAME.pointsTry2;
+
+      qState.awarded = award;
+      dState.score = Number(dState.score||0) + award;
+
+      toast.innerHTML = `<div><span class="goodTxt">Верно.</span> +${award} баллов.</div>`;
+      ui.canProceed = true;
+      $("btnNext").disabled = false;
+      [...document.querySelectorAll(".ans")].forEach(x=>x.disabled=true);
+
+      persist();
+      render();
+      return;
+    }
+
+    if(qState.tries < GAME.maxTries){
+      toast.innerHTML = `<div><span class="badTxt">Неверно.</span> Попробуйте ещё раз.</div>`;
+      persist();
+      render();
+      return;
+    } else {
+      qState.done = true;
+      qState.correct = false;
+      qState.awarded = 0;
+      toast.innerHTML = `<div><span class="badTxt">Неверно.</span> Баллы за вопрос: 0.</div>`;
+      ui.canProceed = true;
+      $("btnNext").disabled = false;
+      [...document.querySelectorAll(".ans")].forEach(x=>x.disabled=true);
+      persist();
+      render();
+      return;
+    }
+  }
+
+  function render(){
+    renderPlayer();
+    if(ui.mode === "home") renderHome();
+    else renderPlay();
+  }
+
+  // Events
+  $("mClose").addEventListener("click", closeModal);
+  $("btnReset").addEventListener("click", ()=>{
+    if(confirm("Сбросить прогресс на этом устройстве?")){
+      localStorage.removeItem(LS_KEY);
+      location.reload();
+    }
+  });
+  $("btnHome").addEventListener("click", ()=>{ ui.mode="home"; render(); });
+  $("btnBackDay").addEventListener("click", ()=>{ ui.mode="home"; render(); });
+  $("btnHint").addEventListener("click", ()=>{ $("hintBox").classList.toggle("show"); });
+  $("btnNext").addEventListener("click", ()=>{
+    if(!ui.canProceed) return;
+    ui.canProceed = false;
+    $("btnNext").disabled = true;
+    $("toast").classList.remove("show");
+    $("hintBox").classList.remove("show");
+    ui.qIndex += 1;
+    render();
+  });
+
+  let state = loadLocal() || newState();
+  setMetaLine("Подключение Firebase…");
+
+  await initFirebase();
+  $("firebaseNote").textContent = "Firebase подключён. Прогресс сохранится в базе и будет доступен при повторном входе с того же устройства.";
+
+  state.player.uid = fb.uid;
+  const remote = await loadFromFirebase(fb.uid);
+  if(remote && remote.player){
+    state = { ...state, ...remote };
+    state.player.uid = fb.uid;
+  }
+
+  state = recomputeTotals(state);
+  saveLocal(state);
+
+  $("btnSaveName").addEventListener("click", ()=>{
+    const last = $("inLast").value.trim();
+    const first = $("inFirst").value.trim();
+    if(!last || !first){ alert("Введите Фамилию и Имя."); return; }
+
+    state.player.lastName = last;
+    state.player.firstName = first;
+    state.player.displayName = `${last} ${first}`;
+    persist();
+    closeModal();
+
+    ui.mode = "home";
+    render();
+    setTimeout(()=>alert(getWelcomeText(state)), 50);
+  });
+
+  if(!state.player.displayName) openModal();
+  ui.mode = "home";
+  render();
+</script>
+</body>
+</html>
